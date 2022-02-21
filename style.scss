@@ -17,7 +17,9 @@ body {
     grid-template-rows: repeat(auto-fit, minmax(160px, 1fr));
 }
 
-#container, .item-container {
+#container,
+.item-container,
+.banner-container {
     border: 1px solid $secondary-light;
 }
 
