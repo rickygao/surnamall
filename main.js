@@ -5,8 +5,8 @@ import 'modern-normalize/modern-normalize.css'
 import './style.scss'
 import data from './data.json'
 
-const container = d3.select('#container')
 
+const container = d3.select('#container')
 
 const fadeIn = (s, d) => s.style('opacity', 0)
     .transition().delay(d ?? (() => Math.random() * 1000))
@@ -14,6 +14,7 @@ const fadeIn = (s, d) => s.style('opacity', 0)
 
 container
     .append('div').classed('banner-container', true)
+    .on('click', () => d3.selectAll('.clicked').classed('clicked', false))
     .append('h1').classed('banner', true)
     .html('Surna<span class="m">m</span>all')
     .call(fadeIn, 0)
@@ -25,14 +26,10 @@ container.selectAll('div:not(.banner-container)').data(data).join(
             event.currentTarget.classList.toggle('clicked')
         })
 
-        itemContainer.append('div').classed('index', true).text((_, i) => (i + 1).toString())
+        itemContainer.append('div').classed('index', true).text((_, i) => i + 1)
 
         const item = itemContainer.append('div').classed('item', true).call(fadeIn)
         item.append('p').classed('pinyin', true).text(d => d.pinyin)
         item.append('h1').classed('name', true).text(d => d.name)
     },
 )
-
-d3.select('.banner-container').on('click', () => {
-    d3.selectAll('.clicked').classed('clicked', false)
-})
