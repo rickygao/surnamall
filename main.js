@@ -7,6 +7,17 @@ import data from './data.json'
 
 const container = d3.select('#container')
 
+
+const fadeIn = (s, d) => s.style('opacity', 0)
+    .transition().delay(d ?? (() => Math.random() * 1000))
+    .duration(1000).style('opacity', null)
+
+container
+    .append('div').classed('banner-container', true)
+    .append('h1').classed('banner', true)
+    .html('Surna<span class="m">m</span>all')
+    .call(fadeIn, 0)
+
 container.selectAll('div:not(.banner-container)').data(data).join(
     (enter) => {
         const itemContainer = enter.append('div').classed('item-container', true)
@@ -16,7 +27,7 @@ container.selectAll('div:not(.banner-container)').data(data).join(
 
         itemContainer.append('div').classed('index', true).text((_, i) => (i + 1).toString())
 
-        const item = itemContainer.append('div').classed('item', true)
+        const item = itemContainer.append('div').classed('item', true).call(fadeIn)
         item.append('p').classed('pinyin', true).text(d => d.pinyin)
         item.append('h1').classed('name', true).text(d => d.name)
     },
